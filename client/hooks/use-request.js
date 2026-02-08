@@ -1,3 +1,5 @@
+'use client';
+
 import axios from 'axios';
 import { useState } from 'react';
 
@@ -15,12 +17,16 @@ export default ({ url, method, body, onSuccess }) => {
 
       return response.data;
     } catch (err) {
+      const apiErrors = err.response?.data?.errors || [
+        { message: 'Something went wrong.' }
+      ];
+
       setErrors(
         <div className="alert alert-danger">
           <h4>Ooops....</h4>
           <ul className="my-0">
-            {err.response.data.errors.map(err => (
-              <li key={err.message}>{err.message}</li>
+            {apiErrors.map(apiError => (
+              <li key={apiError.message}>{apiError.message}</li>
             ))}
           </ul>
         </div>

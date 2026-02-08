@@ -1,18 +1,15 @@
 import axios from 'axios';
 
-export default ({ req }) => {
+export default ({ headers } = {}) => {
   if (typeof window === 'undefined') {
-    // We are on the server
-
+    // Server-side requests from inside the cluster.
     return axios.create({
       baseURL:
         'http://ingress-nginx-controller.ingress-nginx.svc.cluster.local',
-      headers: req.headers,
-    });
-  } else {
-    // We must be on the browser
-    return axios.create({
-      baseUrl: '/',
+      headers,
     });
   }
+
+  // Browser-side requests should hit ingress host directly.
+  return axios.create({ baseURL: '/' });
 };

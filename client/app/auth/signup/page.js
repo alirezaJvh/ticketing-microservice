@@ -1,8 +1,11 @@
-import { useState, useEffect } from 'react';
-import Router from 'next/router';
-import useRequest from '../../hooks/use-request';
+'use client';
 
-export default () => {
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import useRequest from '../../../hooks/use-request';
+
+export default function SignUpPage() {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { doRequest, errors } = useRequest({
@@ -12,12 +15,11 @@ export default () => {
       email,
       password
     },
-    onSuccess: () => Router.push('/')
+    onSuccess: () => router.push('/')
   });
 
   const onSubmit = async event => {
     event.preventDefault();
-
     await doRequest();
   };
 
@@ -45,4 +47,4 @@ export default () => {
       <button className="btn btn-primary">Sign Up</button>
     </form>
   );
-};
+}

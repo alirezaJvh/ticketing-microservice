@@ -1,13 +1,16 @@
-import { useEffect } from 'react';
-import Router from 'next/router';
-import useRequest from '../../hooks/use-request';
+'use client';
 
-export default () => {
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import useRequest from '../../../hooks/use-request';
+
+export default function SignOutPage() {
+  const router = useRouter();
   const { doRequest } = useRequest({
     url: '/api/users/signout',
     method: 'post',
     body: {},
-    onSuccess: () => Router.push('/')
+    onSuccess: () => router.push('/')
   });
 
   useEffect(() => {
@@ -15,4 +18,4 @@ export default () => {
   }, []);
 
   return <div>Signing you out...</div>;
-};
+}
