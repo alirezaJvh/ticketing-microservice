@@ -1,6 +1,5 @@
 import express, { type Request, type Response } from 'express';
-import { currentUser } from '../middlewares/current-user';
-import { requireAuth } from '../middlewares/require-auth';
+import { currentUser, requireAuth } from '@alirezajvh/common';
 
 const router = express.Router();
 
